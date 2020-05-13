@@ -34,4 +34,9 @@ public class PlayerImpl implements PlayerService{
 		return player;
 	}
 
+	@Override
+	public List<Player> getAll() {
+		return playerList;
+	}
+
 }
