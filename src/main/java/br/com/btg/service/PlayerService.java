@@ -8,4 +8,5 @@ public interface PlayerService {
 	Player getBy(String name);
 	Player addPlayer(Player player);
 	List<Player> getAll();
+	void deleteBy(String name);
 }

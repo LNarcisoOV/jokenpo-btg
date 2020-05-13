@@ -39,4 +39,10 @@ public class PlayerImpl implements PlayerService{
 		return playerList;
 	}
 
+	@Override
+	public void deleteBy(String name) {
+		Player player = getBy(name);
+		playerList.remove(player);
+	}
+
 }
