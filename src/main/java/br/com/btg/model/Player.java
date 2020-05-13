@@ -3,10 +3,21 @@ package br.com.btg.model;
 import br.com.btg.constants.Shot;
 
 public class Player {
-
+	
 	private String name;
 	private Shot shot;
+	
+	public Player() {
+	}
 
+	public Player(String name) {
+		this.name = name;
+	}
+	
+	public Player(Shot shot) {
+		this.shot = shot;
+	}
+	
 	public String getName() {
 		return name;
 	}
