@@ -8,60 +8,57 @@ import org.springframework.stereotype.Service;
 
 import br.com.btg.constants.Message;
 import br.com.btg.exception.ValidationException;
-import br.com.btg.model.Player;
-import br.com.btg.service.PlayerService;
-import br.com.btg.util.StringUtil;
+import br.com.btg.model.Input;
+import br.com.btg.service.InputService;
 
 @Service
-public class PlayerImpl implements PlayerService{
+public class PlayerImpl implements InputService{
 	
-	private List<Player> playerList = null;
+	private List<Input> inputList = null;
 	
 	public PlayerImpl() {
-		playerList = new ArrayList<Player>();
+		inputList = new ArrayList<Input>();
 	}
 
 	@Override
-	public Player getBy(String name) throws ValidationException {
-		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
-		Player player = optionalPlayer.orElse(null);
+	public Input getBy(String playerName) throws ValidationException {
+		Optional<Input> optionalPlayer = inputList.stream().filter(p -> p.getPlayerName().equalsIgnoreCase(playerName)).findFirst();
+		Input input = optionalPlayer.orElse(null);
 		
-		if(player == null) {
-			throw new ValidationException(Message.PLAYER_NOT_FOUND);
+		if(input == null) {
+			throw new ValidationException(Message.INPUT_NOT_FOUND);
 		}
 		
-		return player;
+		return input;
 	}
 	
 	@Override
-	public Player addPlayer(Player player) throws ValidationException {
-		if(!isPlayerAlreadyExists(player.getName())) {
-			player.setName(player.getName().toUpperCase());
-			if(!StringUtil.isNullOrEmpty(player.getShot())) {
-				player.setShot(player.getShot().toUpperCase());
-			}
-			playerList.add(player);
-			return player;
+	public Input addInput(Input input) throws ValidationException {
+		if(!isPlayerAlreadyExists(input.getPlayerName())) {
+			input.setName(input.getPlayerName().toUpperCase());
+			input.setShot(input.getShot().toUpperCase());
+			inputList.add(input);
+			return input;
 		} else {
 			throw new ValidationException(Message.PLAYER_ALREADY_EXISTS);
 		}
 	}
 
 	@Override
-	public List<Player> getAll() {
-		return playerList;
+	public List<Input> getAll() {
+		return inputList;
 	}
 
 	@Override
-	public void deleteBy(String name) throws ValidationException {
-		Player player = getBy(name);
-		playerList.remove(player);
+	public void deleteBy(String playerName) throws ValidationException {
+		Input input = getBy(playerName);
+		inputList.remove(input);
 	}
 	
-	private boolean isPlayerAlreadyExists(String name) throws ValidationException {
-		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
-		Player player = optionalPlayer.orElse(null);
+	private boolean isPlayerAlreadyExists(String playerName) throws ValidationException {
+		Optional<Input> optionalInput = inputList.stream().filter(p -> p.getPlayerName().equalsIgnoreCase(playerName)).findFirst();
+		Input input = optionalInput.orElse(null);
 		
-		return player != null;
+		return input != null;
 	}
 }

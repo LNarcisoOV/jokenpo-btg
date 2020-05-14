@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import br.com.btg.constants.Message;
 import br.com.btg.constants.Shot;
 import br.com.btg.exception.ValidationException;
-import br.com.btg.model.Player;
+import br.com.btg.model.Input;
 import br.com.btg.service.ShotService;
 import br.com.btg.util.StringUtil;
 
@@ -13,14 +13,14 @@ import br.com.btg.util.StringUtil;
 public class ShotImpl implements ShotService{
 
 	@Override
-	public Player addShotTo(Player playerDB, String shot) {
+	public Input addShotTo(Input inputResponse, String shot) {
 		if(isAValidShot(shot)) {
-			playerDB.setShot(shot.toUpperCase());
+			inputResponse.setShot(shot.toUpperCase());
 		}else {
 			throw new ValidationException(Message.INVALID_SHOT);
 		}
 		
-		return playerDB;
+		return inputResponse;
 	}
 
 	private boolean isAValidShot(String shot) {

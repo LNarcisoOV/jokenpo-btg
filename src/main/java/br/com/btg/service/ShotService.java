@@ -1,7 +1,7 @@
 package br.com.btg.service;
 
-import br.com.btg.model.Player;
+import br.com.btg.model.Input;
 
 public interface ShotService {
-	Player addShotTo(Player playerDB, String shot);
+	Input addShotTo(Input playerDB, String shot);
 }

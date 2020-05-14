@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.btg.constants.Message;
 import br.com.btg.exception.ValidationException;
-import br.com.btg.model.Player;
-import br.com.btg.service.PlayerService;
+import br.com.btg.model.Input;
+import br.com.btg.service.InputService;
 import br.com.btg.service.ShotService;
-import br.com.btg.util.StringUtil;
+import br.com.btg.util.InputUtil;
 
 @RestController  
 @RequestMapping("/shot")
 public class ShotController {
 	
 	@Autowired
-	private PlayerService playerService;
+	private InputService playerService;
 	
 	@Autowired
 	private ShotService shotService;
 	
 	@PostMapping
-	public ResponseEntity<Object> addShot(@RequestBody Player playerRequest){
+	public ResponseEntity<Object> addShot(@RequestBody Input inputRequest){
 		ResponseEntity<Object> response = null;
 		
-		if(playerRequest != null && !StringUtil.isNullOrEmpty(playerRequest.getName())) {
+		if(InputUtil.isAValidInput(inputRequest)) {
 			try {
-				Player playerResponse = playerService.getBy(playerRequest.getName());
+				Input inputResponse = playerService.getBy(inputRequest.getPlayerName());
 				
-				if(playerResponse != null) {
-					playerResponse = shotService.addShotTo(playerResponse, playerRequest.getShot());
-					response = new ResponseEntity<Object>(playerResponse, HttpStatus.OK);
+				if(inputResponse != null) {
+					inputResponse = shotService.addShotTo(inputResponse, inputRequest.getShot());
+					response = new ResponseEntity<Object>(inputResponse, HttpStatus.OK);
 				} 
 				
 				return response;
@@ -49,7 +49,7 @@ public class ShotController {
 			}
 			
 		}
-		return new ResponseEntity<Object>(Message.PLAYER_HAS_TO_HAVE_A_NAME, HttpStatus.OK);
+		return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_COMPLETE, HttpStatus.OK);
 	}
 
 }
