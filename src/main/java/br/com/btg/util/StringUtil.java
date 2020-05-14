@@ -16,4 +16,8 @@ public class StringUtil {
 		}
 		return json;
 	}
+	
+	public static boolean isNullOrEmpty(String s) {
+		return s == null || s.isEmpty();
+	}
 }
