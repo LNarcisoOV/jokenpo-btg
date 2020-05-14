@@ -1,9 +1,9 @@
 package br.com.btg.constants;
 
 public class Shot {
-	public static final int STONE = 1;
-	public static final int PAPER = 2;
-	public static final int SCISSOR = 3;
-	public static final int LIZARD = 4;
-	public static final int SPOCK = 5;
+	public static final String STONE = "STONE";
+	public static final String PAPER = "PAPER";
+	public static final String SCISSOR = "SCISSOR";
+	public static final String LIZARD = "LIZARD";
+	public static final String SPOCK = "SPOCK";
 }
