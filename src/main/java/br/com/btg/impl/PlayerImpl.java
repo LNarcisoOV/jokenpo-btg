@@ -10,6 +10,7 @@ import br.com.btg.constants.Message;
 import br.com.btg.exception.ValidationException;
 import br.com.btg.model.Player;
 import br.com.btg.service.PlayerService;
+import br.com.btg.util.StringUtil;
 
 @Service
 public class PlayerImpl implements PlayerService{
@@ -22,7 +23,7 @@ public class PlayerImpl implements PlayerService{
 
 	@Override
 	public Player getBy(String name) throws ValidationException {
-		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equals(name)).findFirst();
+		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
 		Player player = optionalPlayer.orElse(null);
 		
 		if(player == null) {
@@ -35,6 +36,10 @@ public class PlayerImpl implements PlayerService{
 	@Override
 	public Player addPlayer(Player player) throws ValidationException {
 		if(!isPlayerAlreadyExists(player.getName())) {
+			player.setName(player.getName().toUpperCase());
+			if(!StringUtil.isNullOrEmpty(player.getShot())) {
+				player.setShot(player.getShot().toUpperCase());
+			}
 			playerList.add(player);
 			return player;
 		} else {
@@ -54,7 +59,7 @@ public class PlayerImpl implements PlayerService{
 	}
 	
 	private boolean isPlayerAlreadyExists(String name) throws ValidationException {
-		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equals(name)).findFirst();
+		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst();
 		Player player = optionalPlayer.orElse(null);
 		
 		return player != null;
