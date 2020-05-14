@@ -1,21 +1,15 @@
 package br.com.btg.model;
 
-import br.com.btg.constants.Shot;
-
 public class Player {
 	
 	private String name;
-	private Shot shot;
+	private String shot;
 	
 	public Player() {
 	}
 
 	public Player(String name) {
 		this.name = name;
-	}
-	
-	public Player(Shot shot) {
-		this.shot = shot;
 	}
 	
 	public String getName() {
@@ -26,11 +20,11 @@ public class Player {
 		this.name = name;
 	}
 
-	public Shot getShot() {
+	public String getShot() {
 		return shot;
 	}
 
-	public void setShot(Shot shot) {
+	public void setShot(String shot) {
 		this.shot = shot;
 	}
 

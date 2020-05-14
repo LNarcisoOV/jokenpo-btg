@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import br.com.btg.constants.Message;
+import br.com.btg.exception.ValidationException;
 import br.com.btg.model.Player;
 import br.com.btg.service.PlayerService;
 
@@ -19,19 +21,25 @@ public class PlayerImpl implements PlayerService{
 	}
 
 	@Override
-	public Player getBy(String name) {
-		if(playerList == null || playerList.isEmpty()) {
-			return null;
+	public Player getBy(String name) throws ValidationException {
+		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equals(name)).findFirst();
+		Player player = optionalPlayer.orElse(null);
+		
+		if(player == null) {
+			throw new ValidationException(Message.PLAYER_NOT_FOUND);
 		}
 		
-		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equals(name)).findFirst();
-		return optionalPlayer.orElse(null);
-	}
-
-	@Override
-	public Player addPlayer(Player player) {
-		playerList.add(player);
 		return player;
+	}
+	
+	@Override
+	public Player addPlayer(Player player) throws ValidationException {
+		if(!isPlayerAlreadyExists(player.getName())) {
+			playerList.add(player);
+			return player;
+		} else {
+			throw new ValidationException(Message.PLAYER_ALREADY_EXISTS);
+		}
 	}
 
 	@Override
@@ -40,9 +48,15 @@ public class PlayerImpl implements PlayerService{
 	}
 
 	@Override
-	public void deleteBy(String name) {
+	public void deleteBy(String name) throws ValidationException {
 		Player player = getBy(name);
 		playerList.remove(player);
 	}
-
+	
+	private boolean isPlayerAlreadyExists(String name) throws ValidationException {
+		Optional<Player> optionalPlayer = playerList.stream().filter(p -> p.getName().equals(name)).findFirst();
+		Player player = optionalPlayer.orElse(null);
+		
+		return player != null;
+	}
 }
