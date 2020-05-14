@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.btg.constants.Message;
 import br.com.btg.model.Player;
 import br.com.btg.service.PlayerService;
+import br.com.btg.util.StringUtil;
 
 @RestController
 @RequestMapping("/player")
@@ -24,25 +26,30 @@ public class PlayerController {
 	private PlayerService playerService;
 	
 	@PostMapping
-	public ResponseEntity<Player> addPlayer(@RequestBody Player player){
-		ResponseEntity<Player> response = null;
+	public ResponseEntity<Object> addPlayer(@RequestBody Player player){
+		ResponseEntity<Object> response = null;
 		
-		try {
-			Player playerDB = playerService.getBy(player.getName());
-			
-			if(playerDB != null) {
-				response = new ResponseEntity<Player>(HttpStatus.FOUND);
-			} else {
-				Player playerResponse = playerService.addPlayer(player);
-				response = new ResponseEntity<Player>(playerResponse, HttpStatus.CREATED);
-			} 
-			
-			return response;
-		} catch(Exception e) {
-			e.printStackTrace();
-			response = new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
-			return response;
+		if(player != null && !StringUtil.isNullOrEmpty(player.getName())) {
+			try {
+				Player playerDB = playerService.getBy(player.getName());
+				
+				if(playerDB != null) {
+					response = new ResponseEntity<Object>(Message.PLAYER_ALREADY_EXISTS, HttpStatus.OK);
+				} else {
+					Player playerResponse = playerService.addPlayer(player);
+					response = new ResponseEntity<Object>(playerResponse, HttpStatus.CREATED);
+				} 
+				
+				return response;
+			} catch(Exception e) {
+				e.printStackTrace();
+				response = new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+				return response;
+			}
+		} else {
+			return new ResponseEntity<Object>(Message.PLAYER_HAS_TO_HAVE_A_NAME, HttpStatus.OK);
 		}
+		
 	}
 	
 	@GetMapping
@@ -59,29 +66,37 @@ public class PlayerController {
 	}
 	
 	@GetMapping("/{name}")
-	public ResponseEntity<Player> getBy(@PathVariable String name){
-		ResponseEntity<Player> response = null;
+	public ResponseEntity<Object> getBy(@PathVariable String name){
+		ResponseEntity<Object> response = null;
 		
-		try {
-			return new ResponseEntity<Player>(playerService.getBy(name), HttpStatus.OK);
-		} catch(Exception e) {
-			e.printStackTrace();
-			response = new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
-			return response;
+		if(!StringUtil.isNullOrEmpty(name)) {
+			try {
+				return new ResponseEntity<Object>(playerService.getBy(name), HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				response = new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+				return response;
+			}
+		} else {
+			return new ResponseEntity<Object>(Message.PLAYER_HAS_TO_HAVE_A_NAME, HttpStatus.OK);
 		}
 	}
 	
 	@DeleteMapping("/{name}")
-	public ResponseEntity<Player> deleteBy(@PathVariable String name){
-		ResponseEntity<Player> response = null;
+	public ResponseEntity<Object> deleteBy(@PathVariable String name){
+		ResponseEntity<Object> response = null;
 		
-		try {
-			playerService.deleteBy(name);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch(Exception e) {
-			e.printStackTrace();
-			response = new ResponseEntity<Player>(HttpStatus.INTERNAL_SERVER_ERROR);
-			return response;
+		if(!StringUtil.isNullOrEmpty(name)) {
+			try {
+				playerService.deleteBy(name);
+				return new ResponseEntity<Object>(HttpStatus.OK);
+			} catch(Exception e) {
+				e.printStackTrace();
+				response = new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
+				return response;
+			}
+		} else {
+			return new ResponseEntity<Object>(Message.PLAYER_HAS_TO_HAVE_A_NAME, HttpStatus.OK);
 		}
 	}
 }
