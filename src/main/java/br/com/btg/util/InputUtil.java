@@ -12,6 +12,6 @@ public class InputUtil {
 	public static boolean isAValidInput(Input input) {
 		return input != null
 				&& (!StringUtil.isNullOrEmpty(input.getPlayerName()) && !StringUtil.isNullOrEmpty(input.getShot()))
-				&& shotList.contains(input.getShot());
+				&& shotList.contains(input.getShot().toUpperCase());
 	}
 }
