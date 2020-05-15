@@ -12,11 +12,11 @@ import br.com.btg.model.Input;
 import br.com.btg.service.InputService;
 
 @Service
-public class PlayerImpl implements InputService{
+public class InputImpl implements InputService{
 	
 	private List<Input> inputList = null;
 	
-	public PlayerImpl() {
+	public InputImpl() {
 		inputList = new ArrayList<Input>();
 	}
 
