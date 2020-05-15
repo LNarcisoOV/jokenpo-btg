@@ -45,7 +45,7 @@ public class InputController {
 				return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_COMPLETE, HttpStatus.OK);
+			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_VALID, HttpStatus.OK);
 		}
 
 	}
@@ -73,7 +73,7 @@ public class InputController {
 				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_COMPLETE, HttpStatus.OK);
+			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_VALID, HttpStatus.OK);
 		}
 	}
 	
@@ -91,7 +91,7 @@ public class InputController {
 				return new ResponseEntity<Object>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		} else {
-			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_COMPLETE, HttpStatus.OK);
+			return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_VALID, HttpStatus.OK);
 		}
 	}
 }

@@ -49,7 +49,7 @@ public class ShotController {
 			}
 			
 		}
-		return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_COMPLETE, HttpStatus.OK);
+		return new ResponseEntity<Object>(Message.INPUT_HAS_TO_BE_VALID, HttpStatus.OK);
 	}
 
 }
