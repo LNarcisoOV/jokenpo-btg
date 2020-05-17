@@ -14,7 +14,6 @@ import br.com.btg.exception.ValidationException;
 import br.com.btg.model.Input;
 
 @ExtendWith(MockitoExtension.class)
-
 public class ShotImplTest {
 	
 	@InjectMocks
@@ -28,7 +27,7 @@ public class ShotImplTest {
 	@BeforeEach
 	public void init() {
 		input1 = new Input();
-		input1.setName("player1");
+		input1.setPlayerName("player1");
 		input1.setShot("scissor");
 	}
 	

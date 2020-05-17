@@ -16,7 +16,7 @@ public class Input {
 		return playerName;
 	}
 
-	public void setName(String playerName) {
+	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
 

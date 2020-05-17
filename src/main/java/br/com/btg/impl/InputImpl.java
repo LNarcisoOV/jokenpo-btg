@@ -35,7 +35,7 @@ public class InputImpl implements InputService{
 	@Override
 	public Input addInput(Input input) throws ValidationException {
 		if(!isPlayerAlreadyExists(input.getPlayerName())) {
-			input.setName(input.getPlayerName().toUpperCase());
+			input.setPlayerName(input.getPlayerName().toUpperCase());
 			input.setShot(input.getShot().toUpperCase());
 			inputList.add(input);
 			return input;

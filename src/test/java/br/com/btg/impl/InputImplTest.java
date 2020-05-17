@@ -26,7 +26,7 @@ public class InputImplTest {
 	@BeforeEach
 	public void init() {
 		input1 = new Input();
-		input1.setName("player1");
+		input1.setPlayerName("player1");
 		input1.setShot("scissor");
 	}
 
